@@ -82,4 +82,31 @@ public class MemberService {
             e.printStackTrace();
         }
     }
+
+
+    //    이메일로 회원정보 조회
+    public MemberDTO infoUpDateForm(String email) {
+        Optional<MemberEntity> byEmail = memberRepository.findByEmail(email);
+        if (byEmail.isPresent()) { // Optional 객체가 값을 가지고 있다면 true
+            return MemberDTO.toMemberDTO(byEmail.get());
+        } else {
+            return null;
+        }
+    }
+
+    // 아이디 정보로 회원정보 삭제
+    public void deleteById(Long id) {
+        memberRepository.deleteById(id);
+    }
+
+    // 회원정보 수정
+    public void infoUpDate(MemberDTO memberDTO) {
+        MemberEntity memberEntity = memberRepository.getOne(memberDTO.getId());
+        memberEntity.setEmail(memberDTO.getEmail());
+        memberEntity.setPassword(memberDTO.getPassword());
+        memberEntity.setName(memberDTO.getName());
+    }
 }
+
+
+

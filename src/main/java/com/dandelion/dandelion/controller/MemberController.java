@@ -4,6 +4,7 @@ import com.dandelion.dandelion.dto.MemberDTO;
 import com.dandelion.dandelion.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -77,5 +78,36 @@ public class MemberController {
         return "redirect:/member/login";
     }
 
+    // 마이페이지
+    @GetMapping("/member/mypage")
+    public String mypage(HttpSession session, Model model){
+        Object loginEmail = session.getAttribute("email"); // 세션유지) 회원의정보를 얻어오기
+        System.out.println("@GetMapping(\"/member/mypage\") 의 이메일 정보 => "+loginEmail);
+        String email = (String)loginEmail; // 강제 형변환
+        MemberDTO memberDTO = memberService.infoUpDateForm(email); // DB에서 email정보로 회원정보를 찾아옴
+        model.addAttribute("memberUpdate", memberDTO); // 가져온 값을 memberUpdate 담는다
+        return "mypage";
+    }
 
+    // 회원정보 수정 후 마이페이지 반환
+    @PostMapping("/member/update")
+    public String upDateUserInfo(@ModelAttribute MemberDTO memberDTO){
+        memberService.infoUpDate(memberDTO);  // 수정버튼 눌렀을 때 디비에 업데이트 되는 메서드 호출
+        return "redirect:/member/mypage"; // 수정된 정보가 확인되는 마이페이지 반환
+    }
+
+
+    // 회원탈퇴 요청받으면 실행 될 메서드
+    @GetMapping("/member/delete/{id}")
+    public String deleteById(@PathVariable Long id){
+        memberService.deleteById(id); // 회원정보를 디비에서 삭제하는 서비스 메서드
+        return "redirect:/"; // 회원탈퇴 후 index페이지로 반환
+    }
+
+    //   로그아웃요청 // 세션 초기화
+    @GetMapping("/logout")
+    public String logOut(HttpSession session){
+        session.invalidate(); // 세션 무효화
+        return "redirect:/";
+    }
 }
