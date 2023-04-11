@@ -89,11 +89,11 @@
         <label class="form-label">Name</label>
         <input type="text" class="form-control" th:value="${memberUpdate.name}" name="name">
       </div>
+      <div class="center text-center mt-4">
+        <button class="btn btn-outline-success" type="submit">저장</button>
+        <a class="btn btn-outline-danger" type="btn" th:href="@{|/member/delete/${memberUpdate.id}|}">회원탈퇴</a>
+      </div>
     </fieldset>
-    <div class="center text-center mt-4">
-      <button class="btn btn-outline-success" type="submit">저장</button>
-      <a class="btn btn-outline-danger" type="btn" th:href="@{|/member/delete/${memberUpdate.id}|}">회원탈퇴</a>
-    </div>
   </form>
 </div>
 <!-- /마이페이지 폼 -->

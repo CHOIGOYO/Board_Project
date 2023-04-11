@@ -105,6 +105,7 @@ public class MemberService {
         memberEntity.setEmail(memberDTO.getEmail());
         memberEntity.setPassword(memberDTO.getPassword());
         memberEntity.setName(memberDTO.getName());
+        memberRepository.save(memberEntity); // 수정된 내용을 데이터베이스에 반영
     }
 }
 
