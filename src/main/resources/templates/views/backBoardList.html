@@ -20,10 +20,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="board : ${boardList}">
-                        <td th:text="${board.title}"></td>
-                        <td th:text="${board.memberName}"></td>
-                        <td th:text="${board.localDateTime}"></td>
+                    <tr th:each="boardList : ${boardList}">
+                        <td th:text="${boardList.title}"></td>
+                        <td th:text="${boardList.memberName}"></td>
+                        <td th:text="${#temporals.format(boardList.localDateTime, 'yyyy-MM-dd''T''HH:mm')}"></td>
                     </tr>
                     </tbody>
                 </table>

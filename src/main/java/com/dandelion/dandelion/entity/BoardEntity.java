@@ -46,4 +46,9 @@ public class BoardEntity extends BaseTimeEntity{
         boardEntity.setMember(member);
         return boardEntity;
     }
+
+    public String getMemberName() {
+        return member != null ? member.getName() : "";
+    }
+
 }

@@ -52,6 +52,7 @@ public class BoardController {
 
     @PostMapping("/save")
     public String boardSave(@ModelAttribute BoardDTO boardDTO, HttpSession httpSession) {
+        String nonce = ""; // 임시변수 선언
         Long memberId = (Long) httpSession.getAttribute("id"); // 회원번호를 id라는 name에 저장했음 주의
         // 현재 로그인한 사용자의 MemberEntity 가져오기
         System.out.println("세션에 저장된 id값 =>"+memberId);
@@ -60,16 +61,17 @@ public class BoardController {
         System.out.println("boardDTO : " + boardDTO);
         // 게시글 저장
         BoardEntity boardEntity = boardService.toBoardEntity(boardDTO, member);
+        nonce = boardDTO.getCategories(); // 저장하기 전 임시변수에 현 카테고리 저장
         boardRepository.save(boardEntity);
 
         // 저장한 카테고리의 글 리스트를 반환하도록
-        switch (boardDTO.getCategories()) {
+        switch (nonce) {
             case "infoBoard":
-                return "redirect:/infolist";
+                return "redirect:/board/infolist";
             case "frontBoard":
-                return "redirect:/frontlist";
+                return "redirect:/board/frontlist";
             case "backBoard":
-                return "redirect:/backlist";
+                return "redirect:/board/backlist";
             default:
                 return "redirect:/"; // 기본 경로로 리디렉션
         }
