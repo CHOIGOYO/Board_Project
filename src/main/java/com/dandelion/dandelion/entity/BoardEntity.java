@@ -37,18 +37,13 @@ public class BoardEntity extends BaseTimeEntity{
     private List<CommentsEntity> comments = new ArrayList<>();
 
 
-    public static BoardEntity toBoardEntity(BoardDTO boardDTO, MemberRepository memberRepository) {
+    public static BoardEntity toBoardEntity(BoardDTO boardDTO, MemberEntity member) {
         BoardEntity boardEntity = new BoardEntity();
         boardEntity.setId(boardDTO.getId());
         boardEntity.setCategories(boardDTO.getCategories());
         boardEntity.setTitle(boardDTO.getTitle());
         boardEntity.setContent(boardDTO.getContent());
-
-        // 작성자 부분 수정
-        if (boardDTO.getMemberId() != null) {
-            Optional<MemberEntity> memberOpt = memberRepository.findById(boardDTO.getMemberId());
-            memberOpt.ifPresent(boardEntity::setMember);
-        }
+        boardEntity.setMember(member);
         return boardEntity;
     }
 }

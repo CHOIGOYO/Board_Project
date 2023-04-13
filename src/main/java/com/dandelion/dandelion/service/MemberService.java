@@ -17,9 +17,9 @@ public class MemberService {
     //    로그인
     public MemberDTO login(MemberDTO memberDTO){
         /*
-        * 회원이 입력한 이메일로 DB에서 조회를 한다
-        * DB에서 조회한 비밀번호와 사용자가 입력한 비밀번호가 일치하는지 판단한다
-        * */
+         * 회원이 입력한 이메일로 DB에서 조회를 한다
+         * DB에서 조회한 비밀번호와 사용자가 입력한 비밀번호가 일치하는지 판단한다
+         * */
         Optional<MemberEntity> byMemberEmail = memberRepository.findByEmail(memberDTO.getEmail());
         System.out.println(memberDTO.getEmail());
         if (byMemberEmail.isPresent()){
@@ -108,6 +108,5 @@ public class MemberService {
         memberRepository.save(memberEntity); // 수정된 내용을 데이터베이스에 반영
     }
 }
-
 
 
