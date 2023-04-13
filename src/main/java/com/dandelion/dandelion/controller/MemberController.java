@@ -18,12 +18,12 @@ public class MemberController {
     //    로그인페이지 반환
     @GetMapping("/member/login")
     public String loginForm() {
-        return "login";
+        return "views/login";
     }
     //    회원가입페이지 반환
     @GetMapping("/member/signUp")
     public String signUpForm(){
-        return "signUp";
+        return "views/signUp";
     }
 
     //    로그인 요청
@@ -36,7 +36,7 @@ public class MemberController {
             httpSession.setAttribute("id",loginResult.getId());
             httpSession.setAttribute("name" ,loginResult.getName());
             if (loginResult != null) { // 로그인 성공했을 경우
-                return "main"; // 메인으로
+                return "redirect:/"; // index페이지
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -86,7 +86,7 @@ public class MemberController {
         String email = (String)loginEmail; // 강제 형변환
         MemberDTO memberDTO = memberService.infoUpDateForm(email); // DB에서 email정보로 회원정보를 찾아옴
         model.addAttribute("memberUpdate", memberDTO); // 가져온 값을 memberUpdate 담는다
-        return "mypage";
+        return "views/mypage";
     }
 
     // 회원정보 수정 후 마이페이지 반환
@@ -99,8 +99,9 @@ public class MemberController {
 
     // 회원탈퇴 요청받으면 실행 될 메서드
     @GetMapping("/member/delete/{id}")
-    public String deleteById(@PathVariable Long id){
+    public String deleteById(@PathVariable Long id ,HttpSession session){
         memberService.deleteById(id); // 회원정보를 디비에서 삭제하는 서비스 메서드
+        session.invalidate(); // 세션 무효화
         return "redirect:/"; // 회원탈퇴 후 index페이지로 반환
     }
 

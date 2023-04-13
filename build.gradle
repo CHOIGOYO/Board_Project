@@ -28,7 +28,7 @@ dependencies {
 	runtimeOnly 'com.mysql:mysql-connector-j'
 // thymeleaf
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '2.4.1'
+	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 // lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -40,7 +40,9 @@ dependencies {
 //  Temporary explicit version to fix Thymeleaf bug
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
 	implementation 'org.springframework.security:spring-security-test'
+
 }
+
 
 tasks.named('test') {
 	useJUnitPlatform()

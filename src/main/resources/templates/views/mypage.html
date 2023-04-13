@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout">
+
+
+<div>
+  <th:block layout:fragment="content">
+    <!-- 마이페이지 폼 -->
+    <div class="container-md shadow p-3 mb-5 mt-5 w-50 bg-body rounded">
+      <form action="/member/update" method="post">
+        <fieldset>
+          <legend>My Information</legend>
+          <div class="mb-3 mt-5">
+            <label class="form-label">ID</label>
+            <input type="text" class="form-control" th:value="${memberUpdate.id}" name="id" readonly>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="text" class="form-control" th:value="${memberUpdate.email}" name="email">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">password</label>
+            <input type="password" class="form-control" th:value="${memberUpdate.password}" name="password">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" th:value="${memberUpdate.name}" name="name">
+          </div>
+          <div class="center text-center mt-4">
+            <button class="btn btn-outline-success" type="submit">저장</button>
+            <a class="btn btn-outline-danger" type="btn" th:href="@{|/member/delete/${memberUpdate.id}|}">회원탈퇴</a>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    <!-- /마이페이지 폼 -->
+  </th:block>
+</div>
+
+
+</html>

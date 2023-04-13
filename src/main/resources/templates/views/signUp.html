@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout">
+<!-- 현재 화면에서만 사용하는 js -->
+<head>
+    <script th:inline="javascript" th:src="@{/js/memberInfoCheck.js}"></script>
+</head>
+<div>
+    <th:block layout:fragment="content">
+        <!-- 회원가입 폼 -->
+        <div class="container-md shadow p-3 mb-5 mt-5 w-50 bg-body rounded">
+            <form id="SignUpForm"  onsubmit="SignUpFormSumitCheck(event)" action="/member/save" method="post" >
+                <h3 class="center text-center">회원가입</h3>
+                <span id="warningMsg"></span>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <div class="row">
+                        <div class="col-10">
+                            <input type="email" class="form-control" name="email" id="email" onblur="emailDuplicateCheck()" placeholder="이메일을 입력해주세요">
+                        </div>
+                        <div class="col-2">
+                            <input class="btn btn-outline-primary"  name="checkEmailNumber" id="checkEmailNumber"  type="button" value="인증번호" onclick="sendEmail()">
+                        </div>
+                    </div>
+                    <span id="checkEmail">
+                 <!-- 사용가능 이메일 확인여부 출력 하기  -->
+            </span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">인증번호</label>
+                    <div class="row">
+                        <div class="col-10">
+                            <input type="text" class="form-control" name="inputCode" id="inputCode" maxlength="6" placeholder="인증번호를 입력해주세요" >
+                        </div>
+                        <div class="col-2">
+                            <input class="btn btn-outline-primary"  name="check" id="check"  type="button" value="확인하기" onclick="verifyCode()">
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <!--<span id="#" class="#">
+                             일치 / 불일치 결과 출력 (미진행)
+                        </span>-->
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="password">Password</label>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="비밀번호를 입력해주세요" aria-describedby="passwordHelpInline">
+                        <span id="password-strength"></span>
+                        <div class="mb-3">
+                            <label class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="비밀번호 확인" onblur="chackPassword()">
+                            <span id="confirmMsg"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">User name</label>
+                            <!-- name속성: 서버로 전송할 때 변수 이름의 역할 -->
+                            <input type="text" class="form-control" name="name" id="name" placeholder="이름을 입력해주세요">
+                        </div>
+                        <div class="center text-center">
+                            <input class="btn btn-primary" type="submit" value="가입하기" >
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </th:block>
+</div>
+
+</html>

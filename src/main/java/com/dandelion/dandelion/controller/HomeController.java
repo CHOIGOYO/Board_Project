@@ -10,8 +10,12 @@ public class HomeController { // 페이지컨트롤러
     //    기본페이지 반환
     @GetMapping("/")
     public String index(){
-        return "index"; //=> templates 폴더의 index.html을 찾아감
+        return "main/index"; //=> templates 폴더의 index.html을 찾아감
     }
 
+    @GetMapping("/main")
+    public String main(){
+        return "main/main";
+    }
 
 }

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout">
+<div>
+    <th:block layout:fragment="content">
+        <!-- list -->
+        <div class="container-md shadow p-3 mb-5 mt-5 w-50 bg-body rounded">
+            <div>
+                <!-- 글 작성하기 버튼 상단에 위치하도록 왼쪽 -->
+            </div>
+            <div>
+                <!-- 테이블 글 목록 -->
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">제목</th>
+                        <th scope="col">작성자</th>
+                        <th scope="col">등록일</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--                     <tr th:each="">
+                        <td th:text=""></td>
+                    </tr> -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /list -->
+    </th:block>
+</div>
+</html>
