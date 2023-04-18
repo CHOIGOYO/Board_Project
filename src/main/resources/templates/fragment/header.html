@@ -44,13 +44,13 @@
                     <span class="nav-link" th:text="${session.name}">User name</span>
                 </li>
                 <li class="nav-item" th:if="${session.name != null}">
-                    <a class="nav-link" href="/mypage">마이페이지</a>
+                    <a class="nav-link" href="/member/mypage">마이페이지</a>
                 </li>
                 <li class="nav-item" th:if="${session.name != null}">
-                    <a class="nav-link" href="/logout">로그아웃</a>
+                    <a class="nav-link" href="/member/logout">로그아웃</a>
                 </li>
                 <li class="nav-item" th:unless="${session.name != null}">
-                    <a class="nav-link" href="/member/login">로그인</a>
+                    <a class="nav-link" href="/member/loginForm">로그인</a>
                 </li>
                 <li class="nav-item" th:unless="${session.name != null}">
                     <a class="nav-link" href="/member/signUp">회원가입</a>

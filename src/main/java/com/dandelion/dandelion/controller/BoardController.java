@@ -23,6 +23,7 @@ public class BoardController {
     private final MemberRepository memberRepository;
     private final BoardService boardService;
 
+    // 인포리스트 반환
     @GetMapping("/infolist")
     public String infolist(Model model){
         String category = "infoBoard";
@@ -30,6 +31,7 @@ public class BoardController {
         model.addAttribute("boardList", boardList);
         return "views/infoBoardList";
     }
+    // 프론트엔드 리스트
     @GetMapping("/frontlist")
     public String frontlist(Model model){
         String category = "frontBoard";
@@ -37,6 +39,7 @@ public class BoardController {
         model.addAttribute("boardList", boardList);
         return "views/frontBoardList";
     }
+    // 백엔드 리스트
     @GetMapping("/backlist")
     public String backlist(Model model){
         String category = "backBoard";
@@ -45,11 +48,13 @@ public class BoardController {
         return "views/backBoardList";
     }
 
+    // 글쓰기 폼
     @GetMapping("/writeForm")
     public String writeForm(){
         return "views/writeForm";
     }
 
+    // 게시글 저장 
     @PostMapping("/save")
     public String boardSave(@ModelAttribute BoardDTO boardDTO, HttpSession httpSession) {
         String nonce = ""; // 임시변수 선언
@@ -75,5 +80,55 @@ public class BoardController {
             default:
                 return "redirect:/"; // 기본 경로로 리디렉션
         }
+    }
+    // 게시글 상세보기
+    @GetMapping("/details/{id}")
+    public String boardDetails(@PathVariable("id") Long id, Model model, HttpSession httpSession){
+        //세션에서 사용자 ID와 역할 가져오기
+        Long userId = (Long) httpSession.getAttribute("id");
+        String userRole = (String) httpSession.getAttribute("role");
+        //사용자의 ID와 역할을  model에 추가
+        model.addAttribute("userId", userId);
+        model.addAttribute("userRole", userRole);
+
+        Optional<BoardEntity> boardOpt = boardRepository.findById(id);
+        if (boardOpt.isPresent()) {
+            BoardEntity boardEntity = boardOpt.get();
+            BoardDTO boardDTO = boardService.toBoardDTO(boardEntity);
+            model.addAttribute("board", boardDTO);
+            return "views/boardDetails";
+        } else {
+            System.out.println("게시글이 존재하지 않는 경우");
+            return "redirect:/previousPage"; // 게시글이 없는 경우 이전 페이지로 리디렉션
+        }
+    }
+    
+    // 게시글 수정페이지 반환
+    @GetMapping("/update/{id}")
+    public String updateBoard(@PathVariable("id") Long id, Model model) {
+        Optional<BoardEntity> boardOpt = boardRepository.findById(id);
+        if (boardOpt.isPresent()) {
+            BoardEntity boardEntity = boardOpt.get();
+            BoardDTO boardDTO = boardService.toBoardDTO(boardEntity);
+            model.addAttribute("board", boardDTO);
+            return "views/boardUpdate";
+        } else {
+            System.out.println("게시글 수정 실패");
+            return "redirect:/previousPage"; // 게시글이 없는 경우 이전 페이지로 리디렉션
+        }
+    }
+    // 게시글 수정 후 업데이트
+    @PostMapping("/editBoardSave/{id}")
+    public String saveEditedBoard(@PathVariable("id") Long id, @ModelAttribute("board") BoardDTO boardDTO) {
+        boardService.updateBoard(id, boardDTO);
+        return "redirect:/board/update/{id}";
+    }
+
+    // 게시글 삭제
+    @GetMapping("/delete/{id}")
+    public String deleteBoard(@PathVariable("id") Long id) {
+        boardService.deleteById(id);
+        System.out.println("삭제 성공");
+        return "redirect:/"; // 삭제 후 index 페이지로 리디렉션
     }
 }

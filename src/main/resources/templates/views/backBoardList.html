@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/default_layout">
+<head>
+    <script th:inline="javascript" th:src="@{/js/boardList.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/boardList.css}" />
+</head>
 <div>
     <th:block layout:fragment="content">
         <!-- list -->
         <div class="container-md shadow p-3 mb-5 mt-5 w-50 bg-body rounded">
             <div>
-                <!-- 글 작성하기 버튼 상단에 위치하도록 왼쪽 -->
-                <a th:href="${session.name != null} ? '/board/writeForm' : '/member/login'" class="btn btn-primary">글 작성하기</a>
+                <a th:href="${session.name != null} ? '/board/writeForm' : '/member/loginForm'" class="btn btn-primary">글 작성하기</a>
             </div>
             <div>
                 <!-- 테이블 글 목록 -->
@@ -20,7 +23,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="boardList : ${boardList}">
+                    <tr class="hoverable-row" th:each="boardList : ${boardList}" th:data-href="@{/board/details/{id}(id=${boardList.id})}">
                         <td th:text="${boardList.title}"></td>
                         <td th:text="${boardList.memberName}"></td>
                         <td th:text="${#temporals.format(boardList.localDateTime, 'yyyy-MM-dd''T''HH:mm')}"></td>

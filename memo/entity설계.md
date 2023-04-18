@@ -13,16 +13,14 @@
 # board Entity (시간 상속)
 1. 게시글 고유번호(id)
 2. 제목(title)
-3. 작성자이름(writer)
-4. 내용(content)
-5. 카테고리(categories)
+3. 내용(content)
+4. 카테고리(categories)
 
 
 # comments Entity (시간 상속)
 1. 부모글 id (board.id)
 2. 댓글 고유번호 (id)
 3. 내용(content)
-4. 작성자이름(writer)
 
 
 

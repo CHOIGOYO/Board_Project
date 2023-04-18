@@ -7,14 +7,14 @@
 6. Thymeleaf
 
 # dandelion 주요기능
-1. 글쓰기(/board/save)
-2. 글목록(/board/)
-3. 글조회(/board/{id})
-4. 글수정(/board/update/{id})
-5. 페이징처리(/board/paging)
-6. 회원가입(/member/signUp)
-7. 로그인(/member/login)
-8. 로그아웃(/member/logout)
-9. 이메일 인증(/member/sendEmail)
-10. 회원정보 수정(/member/update) 
-11. 회원 탈퇴(/member/delete)
+1. 글쓰기
+2. 글목록
+3. 글조회
+4. 글수정
+5. 페이징처리
+6. 회원가입
+7. 로그인
+8. 로그아웃
+9. 이메일 인증
+10. 회원정보 수정
+11. 회원 탈퇴

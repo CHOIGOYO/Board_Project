@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout">
+<head>
+  <script th:inline="javascript" th:src="@{/js/boardDetails.js}"></script>
+</head>
+<div>
+  <th:block layout:fragment="content">
+    <!-- details -->
+    <div class="container-md shadow p-3 mb-5 mt-5 w-50 bg-body rounded">
+      <!-- 추가하기
+       글 제목 , 내용 ,작성자 이름(게시글의 member_id가 본인이거나 user의 role이 admin이면 수정 삭제버튼 보이도록하기
+       -->
+      <h2 th:text="${board.title}"></h2>
+      <input type="hidden" id="board-id" th:value="${board.id}">
+      <p><strong>작성자:</strong> <span th:text="${board.memberName}"></span></p>
+      <p><strong>등록일:</strong> <span th:text="${#temporals.format(board.localDateTime, 'yyyy-MM-dd''T''HH:mm')}"></span></p>
+      <hr>
+      <p th:text="${board.content}"></p>
+
+      <div>
+        <!-- 본인의 글이거나 role이 admin이면 수정 삭제버튼이 보임-->
+        <div th:if="${userId == board.memberId or userRole == 'admin'}">
+          <button type="button" class="btn btn-primary" onclick="updateReq(this)" data-board-id="${board.id}">수정</button>
+          <button type="button" class="btn btn-danger" onclick="deleteReq(this)" data-board-id="${board.id}">삭제</button>
+        </div>
+      </div>
+    </div>
+      <div><!-- 댓글 리스트 -->
+
+      </div>
+      <div class="container-md shadow p-3 mb-5 mt-5 w-50 bg-body rounded"><!-- 댓글 작성란 추가하기-->
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="comments" name="">
+          <button class="btn btn-outline-secondary" type="button" id="submitComments">Button</button>
+        </div>
+      </div>
+    <!-- /details -->
+  </th:block>
+</div>
+</html>

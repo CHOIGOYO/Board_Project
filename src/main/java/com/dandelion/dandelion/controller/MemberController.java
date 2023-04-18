@@ -16,7 +16,7 @@ public class MemberController {
     private final MemberService memberService;
 
     //    로그인페이지 반환
-    @GetMapping("/member/login")
+    @GetMapping("/member/loginForm")
     public String loginForm() {
         return "views/login";
     }
@@ -35,6 +35,7 @@ public class MemberController {
             httpSession.setAttribute("email",loginResult.getEmail());
             httpSession.setAttribute("id",loginResult.getId());
             httpSession.setAttribute("name" ,loginResult.getName());
+            httpSession.setAttribute("role",loginResult.getRole());
             if (loginResult != null) { // 로그인 성공했을 경우
                 return "redirect:/"; // index페이지
             }
@@ -75,7 +76,7 @@ public class MemberController {
         System.out.println("MemberController.save");
         System.out.println("memberDTO = " + memberDTO);
         memberService.save(memberDTO); // service객체에 dto객체를 넘김
-        return "redirect:/member/login";
+        return "redirect:/member/loginForm";
     }
 
     // 마이페이지
@@ -106,7 +107,7 @@ public class MemberController {
     }
 
     //   로그아웃요청 // 세션 초기화
-    @GetMapping("/logout")
+    @GetMapping("/member/logout")
     public String logOut(HttpSession session){
         session.invalidate(); // 세션 무효화
         return "redirect:/";
