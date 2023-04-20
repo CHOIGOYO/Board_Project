@@ -27,7 +27,7 @@
                     <tr class="hoverable-row" th:each="boardList : ${boardList}" th:data-href="@{/board/details/{id}(id=${boardList.id})}">
                         <td th:text="${boardList.title}"></td>
                         <td th:text="${boardList.memberName}"></td>
-                        <td th:text="${#temporals.format(boardList.localDateTime, 'yyyy-MM-dd''T''HH:mm')}"></td>
+                        <td th:text="${#temporals.format(boardList.localDateTime, 'yyyy-M-d'' ''HH:mm')}"></td>
                     </tr>
                     </tbody>
                 </table>

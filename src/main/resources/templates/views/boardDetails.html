@@ -12,7 +12,7 @@
        글 제목 , 내용 ,작성자 이름(게시글의 member_id가 본인이거나 user의 role이 admin이면 수정 삭제버튼 보이도록하기
        -->
       <h2 th:text="${board.title}"></h2>
-      <input type="hidden" id="board-id" th:value="${board.id}">
+      <input type="hidden" id="board-id" th:value="${board.id}"> <!-- 게시글의 id -->
       <p><strong>작성자:</strong> <span th:text="${board.memberName}"></span></p>
       <p><strong>등록일:</strong> <span th:text="${#temporals.format(board.localDateTime, 'yyyy-MM-dd''T''HH:mm')}"></span></p>
       <hr>
@@ -26,13 +26,35 @@
         </div>
       </div>
     </div>
-      <div><!-- 댓글 리스트 -->
+    <div class="container-md shadow p-3 mb-5 mt-5 w-50 bg-body rounded center text-center"><!-- 댓글 리스트 -->
+      <input type="hidden" id="user-id" th:value="${userId}">   <!-- 댓글 작성자의 id  -->
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">내용</th>
+          <th scope="col">작성자</th>
+          <th scope="col">작성 시간</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="comment : ${comments}">
+          <td th:text="${comment.content}"></td>
+          <td th:text="${comment.memberName}"></td>
+          <td th:text="${#temporals.format(comment.localDateTime, 'yyyy-M-d'' ''HH:mm')}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
 
-      </div>
       <div class="container-md shadow p-3 mb-5 mt-5 w-50 bg-body rounded"><!-- 댓글 작성란 추가하기-->
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="comments" name="">
-          <button class="btn btn-outline-secondary" type="button" id="submitComments">Button</button>
+          <input type="text" class="form-control" placeholder="comments" name="comment" id="comment">
+          <div th:if="${session.name != null}">
+            <button class="btn btn-outline-secondary" type="button" id="submitComments">Button</button>
+          </div>
+          <div th:unless="${session.name != null}">
+            <a th:href="@{/member/loginForm}" class="btn btn-outline-secondary">Button</a>
+          </div>
         </div>
       </div>
     <!-- /details -->

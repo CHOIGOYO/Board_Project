@@ -1,11 +1,13 @@
 package com.dandelion.dandelion.controller;
 
 import com.dandelion.dandelion.dto.BoardDTO;
+import com.dandelion.dandelion.dto.CommentsDTO;
 import com.dandelion.dandelion.entity.BoardEntity;
 import com.dandelion.dandelion.entity.MemberEntity;
 import com.dandelion.dandelion.repository.BoardRepository;
 import com.dandelion.dandelion.repository.MemberRepository;
 import com.dandelion.dandelion.service.BoardService;
+import com.dandelion.dandelion.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +24,7 @@ public class BoardController {
     private final BoardRepository boardRepository;
     private final MemberRepository memberRepository;
     private final BoardService boardService;
+    private final CommentService commentService;
 
     // 인포리스트 반환
     @GetMapping("/infolist")
@@ -91,11 +94,15 @@ public class BoardController {
         model.addAttribute("userId", userId);
         model.addAttribute("userRole", userRole);
 
+
         Optional<BoardEntity> boardOpt = boardRepository.findById(id);
         if (boardOpt.isPresent()) {
             BoardEntity boardEntity = boardOpt.get();
             BoardDTO boardDTO = boardService.toBoardDTO(boardEntity);
             model.addAttribute("board", boardDTO);
+
+            List<CommentsDTO> comments = commentService.getCommentsByBoardId(id);
+            model.addAttribute("comments", comments); // 댓글 목록 추가
             return "views/boardDetails";
         } else {
             System.out.println("게시글이 존재하지 않는 경우");
