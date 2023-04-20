@@ -15,30 +15,18 @@ public class MemberService {
 
 
     //    로그인
-    public MemberDTO login(MemberDTO memberDTO){
-        /*
-         * 회원이 입력한 이메일로 DB에서 조회를 한다
-         * DB에서 조회한 비밀번호와 사용자가 입력한 비밀번호가 일치하는지 판단한다
-         * */
+    public MemberDTO login(MemberDTO memberDTO) {
         Optional<MemberEntity> byMemberEmail = memberRepository.findByEmail(memberDTO.getEmail());
-        System.out.println(memberDTO.getEmail());
-        if (byMemberEmail.isPresent()){
-            // 조회 결과가 있다면
+        if (byMemberEmail.isPresent()) {
             MemberEntity memberEntity = byMemberEmail.get();
-            // 가져온 회원정보의 비밀번호와 맞는지 확인하기
             if (memberEntity.getPassword().equals(memberDTO.getPassword())) {
-                // 비밀번호가 일치한 경우
-                // entity 객체를 DTO로 변환 후 리턴
-                MemberDTO dto = MemberDTO.toMemberDTO(memberEntity);
-                return dto;
+                return MemberDTO.toMemberDTO(memberEntity);
             } else {
-                // 비밀번호가 일치하지 않은경우
-                System.out.println("비밀번호가 일치하지 않습니다.");
+                System.out.println("로그인 실패: 비밀번호가 일치하지 않습니다.");
                 return null;
             }
         } else {
-            //조회 경과가 없다면
-            System.out.println("조회결과가 없다(해당 이메일을 가진 회원정보가 없다)");
+            System.out.println("로그인 실패: 해당 이메일을 가진 회원정보가 없습니다.");
             return null;
         }
     }

@@ -28,24 +28,20 @@ public class MemberController {
 
     //    로그인 요청
     @PostMapping("/member/login")
-    public String login(@ModelAttribute MemberDTO memberDTO, HttpSession httpSession){
-        try {
-            MemberDTO loginResult = memberService.login(memberDTO);
-            // 세션에 정보 저장
-            httpSession.setAttribute("email",loginResult.getEmail());
-            httpSession.setAttribute("id",loginResult.getId());
-            httpSession.setAttribute("name" ,loginResult.getName());
-            httpSession.setAttribute("role",loginResult.getRole());
-            if (loginResult != null) { // 로그인 성공했을 경우
-                return "redirect:/"; // index페이지
-            }
-        } catch (Exception e){
-            e.printStackTrace();
+    public String login(@ModelAttribute MemberDTO memberDTO, HttpSession httpSession) {
+        MemberDTO loginResult = memberService.login(memberDTO);
+        if (loginResult != null) {
+            httpSession.setAttribute("email", loginResult.getEmail());
+            httpSession.setAttribute("id", loginResult.getId());
+            httpSession.setAttribute("name", loginResult.getName());
+            httpSession.setAttribute("role", loginResult.getRole());
+            return "redirect:/";
+        } else {
+            System.out.println("로그인 실패: 로그인 정보가 올바르지 않습니다.");
+            return "redirect:/member/login";
         }
-//        로그인에 실패한 경우
-        System.out.println("로그인 요청실패");
-        return "redirect:/member/login"; // 로그인 폼으로 반환
     }
+
 
 
     //    회원가입요청시 이메일 중복체크 비밀번호와 비밀번호 확인체크
