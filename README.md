@@ -6,7 +6,7 @@
 5. Spring Data JAP
 6. Thymeleaf
 
-# dandelion 주요기능
+# 게시판 주요기능
 1. 글쓰기
 2. 글목록
 3. 글조회
